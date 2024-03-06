@@ -1,0 +1,80 @@
+version: '3.5'
+services:
+  redis-cluster:
+      image: 'redis:6'
+      command: redis-cli -h ${IP} --cluster create ${IP}:6373 ${IP}:6374 ${IP}:6375 ${IP}:6376 ${IP}:6377 ${IP}:6378 --cluster-yes --cluster-replicas 1
+      depends_on:
+        - redis-node-1
+        - redis-node-2
+        - redis-node-3
+        - redis-node-4
+        - redis-node-5
+        - redis-node-6
+
+  redis-node-1:
+      image: 'redis:6'
+      container_name: redis1
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6373:6373'
+        - '16373:16373'
+      volumes:
+        - redis-node-1-data:/var/lib/redis
+        - ./docker/redis-node-1.conf:/usr/local/etc/redis/redis.conf
+  redis-node-2:
+      image: 'redis:6'
+      container_name: redis2
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6374:6374'
+        - '16374:16374'
+      volumes:
+        - redis-node-2-data:/var/lib/redis
+        - ./docker/redis-node-2.conf:/usr/local/etc/redis/redis.conf
+  redis-node-3:
+      image: 'redis:6'
+      container_name: redis3
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6375:6375'
+        - '16375:16375'
+      volumes:
+        - redis-node-3-data:/var/lib/redis
+        - ./docker/redis-node-3.conf:/usr/local/etc/redis/redis.conf
+  redis-node-4:
+      image: 'redis:6'
+      container_name: redis4
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6376:6376'
+        - '16376:16376'
+      volumes:
+        - redis-node-4-data:/var/lib/redis
+        - ./docker/redis-node-4.conf:/usr/local/etc/redis/redis.conf
+  redis-node-5:
+      image: 'redis:6'
+      container_name: redis5
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6377:6377'
+        - '16377:16377'
+      volumes:
+        - redis-node-5-data:/var/lib/redis
+        - ./docker/redis-node-5.conf:/usr/local/etc/redis/redis.conf
+  redis-node-6:
+      image: 'redis:6'
+      container_name: redis6
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ports:
+        - '6378:6378'
+        - '16378:16378'
+      volumes:
+        - redis-node-6-data:/var/lib/redis
+        - ./docker/redis-node-6.conf:/usr/local/etc/redis/redis.conf
+volumes:
+  redis-node-1-data:
+  redis-node-2-data:
+  redis-node-3-data:
+  redis-node-4-data:
+  redis-node-5-data:
+  redis-node-6-data:
